@@ -66,11 +66,21 @@
   force = true
 
 # ---------------------------------------------------------------------------
-# NOTE: there is deliberately NO redirect rule for "/".
+# Root route.
 #
-# The form posts its submission to "/". A redirect on that path would make the
-# browser follow it as a GET, so the POST body would be dropped, the GET would
-# return 200, and the page would show its success state without Netlify ever
-# storing the registration. Requests for "/" fall through to 404.html; add an
-# index.html if you want a real landing page there.
+# The site has no index.html, so without this rule "/" matches nothing and
+# Netlify serves 404.html.
+#
+# status = 200 makes this a REWRITE, not a redirect: Netlify serves the
+# contents of register.html while the address bar stays at "/". That matters
+# because the form posts to "/". A 301/302 here would be followed by the
+# browser as a GET, silently dropping the POST body, so the page would show
+# its success state while nothing was ever stored.
+#
+# No "force" flag: if an index.html is added later it should win over this rule.
 # ---------------------------------------------------------------------------
+
+[[redirects]]
+  from = "/"
+  to = "/register.html"
+  status = 200
