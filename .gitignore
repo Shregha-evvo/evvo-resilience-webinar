@@ -1,0 +1,54 @@
+# ---------------------------------------------------------------------------
+# Secrets and local configuration
+# ---------------------------------------------------------------------------
+.env
+.env.*
+# NOTE: .env.example is deliberately NOT un-ignored. It documents the retired
+# PHP/SMTP setup (SMTP_HOST, SMTP_PASSWORD...), not the Netlify function's
+# variables, which live in the Netlify dashboard. Uncomment to track it anyway.
+# !.env.example
+
+*.log
+
+# ---------------------------------------------------------------------------
+# Dependencies
+# ---------------------------------------------------------------------------
+node_modules/
+
+# Composer/PHPMailer tree. Not used by the Netlify deployment, contains
+# credentials that must never reach a Git remote, and carries its own nested
+# .git directory.
+vendor/
+
+# ---------------------------------------------------------------------------
+# Retired PHP implementation
+#
+# Kept on disk as a rollback until the Netlify deployment is signed off, but
+# not part of the production architecture. Netlify cannot execute PHP, so
+# committing these would publish them as readable plain text.
+# ---------------------------------------------------------------------------
+send-mail.php
+router.php
+.htaccess
+
+# ---------------------------------------------------------------------------
+# Local-only tooling and generated output
+# ---------------------------------------------------------------------------
+
+# Generated copy of the site for manual drag-and-drop deploys. Committing it
+# would publish the whole site a second time under /netlify-deploy/.
+netlify-deploy/
+
+# Local preview server and the manual-deploy folder builder; neither is needed
+# once Netlify builds from Git.
+serve.ps1
+build-deploy-folder.ps1
+
+# ---------------------------------------------------------------------------
+# OS / editor noise
+# ---------------------------------------------------------------------------
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/

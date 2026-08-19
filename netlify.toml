@@ -1,0 +1,76 @@
+# Netlify configuration for the EDM Resilience Webinar site.
+#
+# This site has no build step. Netlify still runs deploy-time post-processing,
+# which is what detects the "webinar-registration" form in register.html, and
+# it still applies the redirect rules below.
+
+[build]
+  publish = "."
+
+# Declared outside [build] so the setting applies even though no build runs.
+[functions]
+  directory = "netlify/functions"
+
+# ---------------------------------------------------------------------------
+# Security rules.
+#
+# The retired PHP implementation is kept on the local disk as a rollback but is
+# excluded from Git, so it should never reach a deploy. Netlify cannot execute
+# PHP and would serve any such file as readable plain text.
+#
+# These rules are a second line of defence in case one is ever added back.
+# ---------------------------------------------------------------------------
+
+[[redirects]]
+  from = "/vendor/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/send-mail.php"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/router.php"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.htaccess"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/serve.ps1"
+  to = "/404.html"
+  status = 404
+  force = true
+
+# The functions directory sits inside the publish directory, so without this
+# the function's source would be downloadable at /netlify/functions/...
+[[redirects]]
+  from = "/netlify/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+# ---------------------------------------------------------------------------
+# NOTE: there is deliberately NO redirect rule for "/".
+#
+# The form posts its submission to "/". A redirect on that path would make the
+# browser follow it as a GET, so the POST body would be dropped, the GET would
+# return 200, and the page would show its success state without Netlify ever
+# storing the registration. Requests for "/" fall through to 404.html; add an
+# index.html if you want a real landing page there.
+# ---------------------------------------------------------------------------
