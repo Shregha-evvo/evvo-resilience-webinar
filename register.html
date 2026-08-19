@@ -860,16 +860,6 @@ p{ margin:0; }
 (function(){
   'use strict';
 
-  /* ==========================================================
-     CONFIG — submissions go to Netlify Forms.
-     Post the URL-encoded form data to "/", the endpoint Netlify
-     documents for AJAX form submissions. Netlify files the
-     submission under the form's name ("webinar-registration"),
-     which is sent in the hidden form-name field.
-     Do NOT set this to a page path such as /register.html:
-     static pages do not accept POST and Netlify replies 404.
-     Leave it empty to run in demo mode (logs to console).
-     ========================================================== */
   var FORM_ENDPOINT = '/';
   var EVENT_START   = '2026-09-03T11:00:00+08:00';   // 11:00 SGT
   var EVENT_END     = '2026-09-03T12:00:00+08:00';
