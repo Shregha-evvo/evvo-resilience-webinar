@@ -8,6 +8,7 @@
 # variables, which live in the Netlify dashboard. Uncomment to track it anyway.
 # !.env.example
 
+
 *.log
 
 # ---------------------------------------------------------------------------
